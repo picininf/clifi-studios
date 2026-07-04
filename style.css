@@ -1,0 +1,382 @@
+/* Reset de estilos básicos */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Montserrat', sans-serif;
+    background-color: #0b0b0b;
+    color: #ffffff;
+    line-height: 1.6;
+    scroll-behavior: smooth;
+}
+
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 0;
+}
+
+/* Cabeçalho */
+header {
+    background-color: rgba(11, 11, 11, 0.95);
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1000;
+    border-bottom: 1px solid #222;
+}
+
+.header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 0;
+}
+
+.logo {
+    font-weight: 800;
+    font-size: 24px;
+    letter-spacing: 2px;
+}
+
+.logo-main {
+    color: #ffffff;
+}
+
+.logo-dot {
+    color: #E63900; /* Cor vermelha/laranja idêntica ao logo */
+}
+
+.logo-sub {
+    font-weight: 300;
+    font-size: 14px;
+    color: #aaaaaa;
+    margin-left: 5px;
+    letter-spacing: 4px;
+}
+
+nav ul {
+    display: flex;
+    list-style: none;
+    align-items: center;
+}
+
+nav ul li {
+    margin-left: 25px;
+}
+
+nav ul li a {
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 600;
+    transition: color 0.3s;
+}
+
+nav ul li a:hover {
+    color: #E63900;
+}
+
+.btn-nav {
+    background-color: #E63900;
+    padding: 8px 16px;
+    border-radius: 4px;
+    transition: background-color 0.3s !important;
+}
+
+.btn-nav:hover {
+    background-color: #ff4a14 !important;
+}
+
+/* Seção Hero */
+.hero {
+    background: linear-gradient(rgba(0, 0, 0, 0.75), rgba(11, 11, 11, 1)), url('https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?q=80&w=1920') no-repeat center center/cover;
+    height: 80vh;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    padding-top: 80px;
+}
+
+.hero-content h1 {
+    font-size: 48px;
+    font-weight: 800;
+    letter-spacing: 6px;
+    margin-bottom: 20px;
+}
+
+.hero-content p {
+    font-size: 18px;
+    color: #cccccc;
+    max-width: 600px;
+    margin: 0 auto 30px auto;
+    font-weight: 300;
+}
+
+.btn-primary {
+    display: inline-block;
+    background-color: #E63900;
+    color: #ffffff;
+    text-decoration: none;
+    padding: 12px 32px;
+    font-weight: 600;
+    border-radius: 4px;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+.btn-primary:hover {
+    background-color: #ff4a14;
+    transform: translateY(-2px);
+}
+
+/* Seção de Serviços */
+.services {
+    background-color: #0b0b0b;
+    padding: 60px 0;
+}
+
+.section-title {
+    text-align: center;
+    font-size: 32px;
+    font-weight: 800;
+    letter-spacing: 2px;
+    margin-bottom: 40px;
+    position: relative;
+}
+
+.section-title::after {
+    content: '';
+    display: block;
+    width: 50px;
+    height: 3px;
+    background-color: #E63900;
+    margin: 10px auto 0 auto;
+}
+
+.services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+}
+
+.service-card {
+    background-color: #161616;
+    border: 1px solid #222;
+    padding: 40px 30px;
+    border-radius: 8px;
+    text-align: center;
+    transition: transform 0.3s, border-color 0.3s;
+    position: relative;
+}
+
+.service-card:hover {
+    transform: translateY(-5px);
+    border-color: #E63900;
+}
+
+.service-card h3 {
+    font-size: 20px;
+    margin-bottom: 15px;
+}
+
+.price {
+    font-size: 36px;
+    font-weight: 800;
+    margin-bottom: 20px;
+}
+
+.price span {
+    font-size: 14px;
+    font-weight: 300;
+    color: #aaaaaa;
+}
+
+.service-card ul {
+    list-style: none;
+    margin-bottom: 30px;
+    text-align: left;
+}
+
+.service-card ul li {
+    margin-bottom: 10px;
+    color: #cccccc;
+    font-size: 14px;
+}
+
+.service-card ul li::before {
+    content: '✓';
+    color: #E63900;
+    margin-right: 10px;
+}
+
+.btn-select {
+    width: 100%;
+    background-color: transparent;
+    border: 2px solid #E63900;
+    color: #ffffff;
+    padding: 10px 0;
+    font-weight: 600;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.btn-select:hover {
+    background-color: #E63900;
+}
+
+.service-card.featured {
+    border: 2px solid #E63900;
+    background-color: #1c1c1c;
+}
+
+.badge {
+    position: absolute;
+    top: -15px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #E63900;
+    color: white;
+    padding: 4px 12px;
+    font-size: 12px;
+    font-weight: 600;
+    border-radius: 20px;
+    text-transform: uppercase;
+}
+
+/* Seção de Agendamento */
+.booking {
+    background-color: #121212;
+    padding: 80px 0;
+}
+
+.section-subtitle {
+    text-align: center;
+    color: #aaaaaa;
+    margin-bottom: 40px;
+}
+
+.booking-wrapper {
+    max-width: 600px;
+    margin: 0 auto;
+    background-color: #161616;
+    padding: 40px;
+    border-radius: 8px;
+    border: 1px solid #222;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+label {
+    display: block;
+    font-size: 14px;
+    margin-bottom: 8px;
+    color: #cccccc;
+}
+
+input, select {
+    width: 100%;
+    padding: 12px;
+    background-color: #0b0b0b;
+    border: 1px solid #333;
+    color: white;
+    border-radius: 4px;
+    font-family: 'Montserrat', sans-serif;
+}
+
+input:focus, select:focus {
+    outline: none;
+    border-color: #E63900;
+}
+
+.checkout-box {
+    background-color: #0b0b0b;
+    padding: 20px;
+    border-radius: 6px;
+    margin-top: 30px;
+    border: 1px solid #222;
+}
+
+.checkout-box h3 {
+    font-size: 16px;
+    margin-bottom: 15px;
+    border-bottom: 1px solid #222;
+    padding-bottom: 10px;
+}
+
+.checkout-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    font-size: 14px;
+    color: #aaaaaa;
+}
+
+hr {
+    border: none;
+    border-top: 1px solid #222;
+    margin: 15px 0;
+}
+
+.checkout-row.total {
+    color: white;
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.checkout-row.total #total-pagar {
+    color: #E63900;
+}
+
+.pagamento-info {
+    font-size: 12px;
+    color: #777777;
+    margin: 15px 0;
+    text-align: center;
+}
+
+.btn-checkout {
+    width: 100%;
+    background-color: #E63900;
+    color: white;
+    border: none;
+    padding: 14px;
+    font-weight: 600;
+    font-size: 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.btn-checkout:hover {
+    background-color: #ff4a14;
+}
+
+/* Rodapé */
+footer {
+    background-color: #0b0b0b;
+    border-top: 1px solid #222;
+    text-align: center;
+    padding: 30px 0;
+    font-size: 12px;
+    color: #666666;
+}
+
+@media (max-width: 768px) {
+    .header-container { flex-direction: column; gap: 15px; }
+    nav ul li { margin: 0 10px; }
+    .form-row { grid-template-columns: 1fr; }
+    .hero-content h1 { font-size: 32px; }
+}

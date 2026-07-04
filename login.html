@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>CLIFI STUDIOS | Login</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <style>
+        body { display: flex; align-items: center; justify-content: center; height: 100vh; background: #0b0b0b; color: white; font-family: sans-serif; }
+        .card { background: #161616; padding: 40px; border-radius: 8px; width: 320px; text-align: center; border: 1px solid #222; }
+        input { width: 100%; padding: 10px; margin: 10px 0; background: #222; border: 1px solid #333; color: white; border-radius: 4px; box-sizing: border-box;}
+        button { width: 100%; padding: 12px; background: #E63900; color: white; border: none; font-weight: bold; border-radius: 4px; cursor: pointer; }
+        a { display: block; margin-top: 15px; color: #777; text-decoration: none; font-size: 14px; }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h2>CLIFI_LOGIN</h2>
+        <form id="form-login">
+            <input type="email" id="login-email" required placeholder="E-mail">
+            <input type="password" id="login-senha" required placeholder="Senha">
+            <button type="submit">Entrar</button>
+        </form>
+        <a href="registro.html">Não tem conta? Cadastre-se</a>
+        <a href="index.html">← Voltar</a>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
