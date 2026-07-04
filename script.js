@@ -3,20 +3,22 @@ const SUPABASE_URL = 'https://vbteldgxbjzcyeupvqfh.supabase.co';
 const SUPABASE_KEY = 'sb_publishable_gFZvU5AhfALyay6DoFcirA_vD-R4sd-';
 
 // Inicialização segura para navegadores
-const _supabaseClient = window.supabase ? window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY) : null;
-const supabase = _supabaseClient;
+const supabase = window.supabase ? window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY) : null;
 
 if (!supabase) {
-    console.error("Erro fatal: A biblioteca do Supabase não foi carregada no HTML!");
+    alert("Erro fatal: A biblioteca do Supabase não foi carregada no HTML!");
 }
 
-// 1. GERENCIAMENTO DE ESTADO E INICIALIZAÇÃO DA PÁGINA
+// EXECUTA ASSIM QUE A PÁGINA CARREGAR
 document.addEventListener("DOMContentLoaded", async function() {
     if (!supabase) return;
 
+    // 1. VERIFICAÇÃO DE SESSÃO ATIVA (Para todas as páginas)
     const { data: { session } } = await supabase.auth.getSession();
 
-    // Lógica da Home (index.html)
+    // ==========================================
+    // LÓGICA DA HOME (index.html)
+    // ==========================================
     if (document.getElementById('menu-auth')) {
         const menuAdm = document.getElementById('menu-adm');
         const menuAuth = document.getElementById('menu-auth');
@@ -35,14 +37,80 @@ document.addEventListener("DOMContentLoaded", async function() {
                 window.location.reload();
             });
 
-            // Se for o seu e-mail, libera o link do Painel ADM
             if (usuario.email === 'filipepicinin7@gmail.com') {
                 if (menuAdm) menuAdm.style.display = 'block';
             }
         }
     }
 
-    // Lógica da Dashboard (dashboard.html) - Proteção de Acesso
+    // ==========================================
+    // LÓGICA DO REGISTRO (registro.html)
+    // ==========================================
+    const formRegistro = document.getElementById('form-registro');
+    if (formRegistro) {
+        formRegistro.addEventListener('submit', async function(e) {
+            e.preventDefault(); // Impede a página de sumir/recarregar
+            
+            const nome = document.getElementById('reg-nome').value.trim();
+            const email = document.getElementById('reg-email').value.trim();
+            const senha = document.getElementById('reg-senha').value;
+
+            if (senha.length < 6) {
+                alert("A senha precisa ter no mínimo 6 caracteres!");
+                return;
+            }
+
+            try {
+                const { data, error } = await supabase.auth.signUp({
+                    email: email,
+                    password: senha,
+                    options: { data: { nome: nome } }
+                });
+
+                if (error) {
+                    alert("Erro no cadastro: " + error.message);
+                } else {
+                    alert("Conta criada com sucesso! Redirecionando...");
+                    window.location.href = 'login.html';
+                }
+            } catch (err) {
+                alert("Erro interno: " + err.message);
+            }
+        });
+    }
+
+    // ==========================================
+    // LÓGICA DO LOGIN (login.html)
+    // ==========================================
+    const formLogin = document.getElementById('form-login');
+    if (formLogin) {
+        formLogin.addEventListener('submit', async function(e) {
+            e.preventDefault(); // Impede a página de sumir/recarregar
+            
+            const email = document.getElementById('login-email').value.trim();
+            const senha = document.getElementById('login-senha').value;
+
+            try {
+                const { data, error } = await supabase.auth.signInWithPassword({
+                    email: email,
+                    password: senha
+                });
+
+                if (error) {
+                    alert("Erro no login: " + error.message);
+                } else {
+                    alert("Login efetuado com sucesso!");
+                    window.location.href = 'index.html';
+                }
+            } catch (err) {
+                alert("Erro interno: " + err.message);
+            }
+        });
+    }
+
+    // ==========================================
+    // LÓGICA DA DASHBOARD (dashboard.html)
+    // ==========================================
     if (document.getElementById('tabela-vendas-corpo')) {
         if (!session || session.user.email !== 'filipepicinin7@gmail.com') {
             window.location.href = 'login.html';
@@ -50,101 +118,11 @@ document.addEventListener("DOMContentLoaded", async function() {
         }
         carregarDadosDashboard();
     }
-
-    // Vincula as funções de envio aos formulários para evitar recarregamento clássico
-    const formReg = document.getElementById('form-registro');
-    if (formReg) formReg.onsubmit = executarRegistro;
-
-    const formLog = document.getElementById('form-login');
-    if (formLog) formLog.onsubmit = executarLogin;
 });
 
-// 2. SISTEMA DE LOGIN E CADASTRO (VERSÃO RIGOROSA COM CLIQUES DIRETOS)
-async function executarRegistro(event) {
-    if (event) event.preventDefault();
-    
-    const nomeInput = document.getElementById('reg-nome');
-    const emailInput = document.getElementById('reg-email');
-    const senhaInput = document.getElementById('reg-senha');
-
-    if (!nomeInput || !emailInput || !senhaInput) {
-        alert("Erro no formulário: Campos não foram encontrados na página.");
-        return false;
-    }
-
-    const nome = nomeInput.value.trim();
-    const email = emailInput.value.trim();
-    const senha = senhaInput.value;
-
-    if (!nome || !email || !senha) {
-        alert("Por favor, preencha todos os campos!");
-        return false;
-    }
-
-    if (senha.length < 6) {
-        alert("A senha precisa ter no mínimo 6 caracteres!");
-        return false;
-    }
-
-    try {
-        const { data, error } = await supabase.auth.signUp({
-            email: email,
-            password: senha,
-            options: {
-                data: { nome: nome }
-            }
-        });
-
-        if (error) {
-            alert("Erro do Supabase no Registro: " + error.message);
-        } else {
-            alert("Conta criada com sucesso! Redirecionando para o login...");
-            window.location.href = 'login.html';
-        }
-    } catch (err) {
-        alert("Erro crítico no JavaScript do Registro: " + err.message);
-    }
-    return false;
-}
-
-async function executarLogin(event) {
-    if (event) event.preventDefault();
-    
-    const emailInput = document.getElementById('login-email');
-    const senhaInput = document.getElementById('login-senha');
-
-    if (!emailInput || !senhaInput) {
-        alert("Erro no formulário: Campos não foram encontrados na página.");
-        return false;
-    }
-
-    const email = emailInput.value.trim();
-    const senha = senhaInput.value;
-
-    if (!email || !senha) {
-        alert("Por favor, preencha o e-mail e a senha!");
-        return false;
-    }
-
-    try {
-        const { data, error } = await supabase.auth.signInWithPassword({
-            email: email,
-            password: senha
-        });
-
-        if (error) {
-            alert("Erro do Supabase no Login: " + error.message);
-        } else {
-            alert("Login efetuado com sucesso!");
-            window.location.href = 'index.html';
-        }
-    } catch (err) {
-        alert("Erro crítico no JavaScript do Login: " + err.message);
-    }
-    return false;
-}
-
-// 3. FLUXO DE AGENDAMENTO E FILTRO DE HORÁRIOS EXCLUSIVOS
+// ==========================================
+// FUNÇÕES AUXILIARES DE AGENDAMENTO
+// ==========================================
 function selecionarServico(idServico) {
     const selectElement = document.getElementById('servico-selecionado');
     if (selectElement) {
@@ -191,7 +169,6 @@ async function carregarHorariosDisponiveis() {
 
     if (error) { 
         console.error(error); 
-        selectHora.innerHTML = '<option value="" disabled selected>Erro ao buscar horários</option>';
         return; 
     }
 
@@ -239,12 +216,10 @@ if (formAgendamento) {
     });
 }
 
-// 4. ALIMENTAÇÃO DINÂMICA DA DASHBOARD
 async function carregarDadosDashboard() {
     if (!supabase) return;
-    
     const { data: agendamentos, error } = await supabase.from('agendamentos').select('*').order('data_criacao', { ascending: false });
-    if (error) { console.error(error); return; }
+    if (error) return;
 
     let faturamentoTotal = 0;
     const corpoTabela = document.getElementById('tabela-vendas-corpo');
