@@ -1,6 +1,6 @@
 // CONFIGURAÇÕES DO SEU SUPABASE (Substitua com as suas chaves reais!)
-const SUPABASE_URL = 'https://SUA_URL_AQUI.supabase.co';
-const SUPABASE_KEY = 'SUA_CHAVE_ANONIMA_AQUI';
+const SUPABASE_URL = 'https://vbteldgxbjzcyeupvqfh.supabase.co';
+const SUPABASE_KEY = 'sb_publishable_gFZvU5AhfALyay6DoFcirA_vD-R4sd-';
 const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
 // 1. GERENCIAMENTO DE ESTADO E INICIALIZAÇÃO DA PÁGINA
