@@ -307,3 +307,31 @@ async function carregarDadosDashboard() {
     document.getElementById('dash-faturamento').innerText = `R$ ${faturamentoTotal.toFixed(2).replace('.', ',')}`;
     document.getElementById('dash-vendas').innerText = `${agendamentos.length} clipes`;
 }
+document.addEventListener('DOMContentLoaded', () => {
+    const faqQuestions = document.querySelectorAll('.faq-question');
+
+    faqQuestions.forEach(question => {
+        question.addEventListener('click', () => {
+            const faqItem = question.parentElement;
+            const faqAnswer = question.nextElementSibling;
+
+            // Fecha outros FAQs abertos (opcional, deixa mais limpo)
+            document.querySelectorAll('.faq-item').forEach(item => {
+                if (item !== faqItem && item.classList.contains('active')) {
+                    item.classList.remove('active');
+                    item.querySelector('.faq-answer').style.maxHeight = '0';
+                }
+            });
+
+            // Altera o estado do FAQ atual
+            faqItem.classList.toggle('active');
+
+            if (faqItem.classList.contains('active')) {
+                // Define a altura máxima baseada no tamanho real do texto interno
+                faqAnswer.style.maxHeight = faqAnswer.scrollHeight + 'px';
+            } else {
+                faqAnswer.style.maxHeight = '0';
+            }
+        });
+    });
+});
