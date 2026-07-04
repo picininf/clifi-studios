@@ -2,11 +2,14 @@
 const SUPABASE_URL = 'https://vbteldgxbjzcyeupvqfh.supabase.co';
 const SUPABASE_KEY = 'sb_publishable_gFZvU5AhfALyay6DoFcirA_vD-R4sd-';
 
+// LINK DO SEU GOOGLE APPS SCRIPT (PLANILHA)
+const GOOGLE_SHEETS_URL = 'https://script.google.com/macros/s/AKfycbxInzHUEGZ4kXJkcbJvsX2AZvUOUXDWFTEKMCeIlN98tuTq1W_36pqcGEHRLVLfbanSzQ/exec';
+
 // Inicialização segura para navegadores
 const supabase = window.supabase ? window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY) : null;
 
 if (!supabase) {
-    alert("Erro fatal: A biblioteca do Supabase não foi carregada no HTML!");
+    console.error("Erro fatal: A biblioteca do Supabase não foi carregada no HTML!");
 }
 
 // EXECUTA ASSIM QUE A PÁGINA CARREGAR
@@ -49,7 +52,7 @@ document.addEventListener("DOMContentLoaded", async function() {
     const formRegistro = document.getElementById('form-registro');
     if (formRegistro) {
         formRegistro.addEventListener('submit', async function(e) {
-            e.preventDefault(); // Impede a página de sumir/recarregar
+            e.preventDefault();
             
             const nome = document.getElementById('reg-nome').value.trim();
             const email = document.getElementById('reg-email').value.trim();
@@ -85,7 +88,7 @@ document.addEventListener("DOMContentLoaded", async function() {
     const formLogin = document.getElementById('form-login');
     if (formLogin) {
         formLogin.addEventListener('submit', async function(e) {
-            e.preventDefault(); // Impede a página de sumir/recarregar
+            e.preventDefault();
             
             const email = document.getElementById('login-email').value.trim();
             const senha = document.getElementById('login-senha').value;
@@ -204,13 +207,43 @@ if (formAgendamento) {
             "3": { nome: "Edição de Vídeo", preco: 450.00 }
         };
 
-        const { error } = await supabase.from('agendamentos').insert([{
-            nome, email, servico: tabelaServicos[servicoId].nome, data_agendamento: data, horario: hora, valor_total: tabelaServicos[servicoId].preco
-        }]);
+        const servicoNome = tabelaServicos[servicoId].nome;
+        const valorTotal = tabelaServicos[servicoId].preco;
 
-        if (error) alert("Erro ao agendar: " + error.message);
-        else {
-            alert("Agendamento efetuado com sucesso!"); 
+        try {
+            // 1. Salva no Supabase
+            const { error } = await supabase.from('agendamentos').insert([{
+                nome, email, servico: servicoNome, data_agendamento: data, horario: hora, valor_total: valorTotal
+            }]);
+
+            if (error) {
+                alert("Erro ao salvar no banco: " + error.message);
+                return;
+            }
+
+            // 2. Envia para o Google Sheets de forma assíncrona/silenciosa
+            await fetch(GOOGLE_SHEETS_URL, {
+                method: 'POST',
+                mode: 'no-cors',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    nome: nome,
+                    email: email,
+                    servico: servicoNome,
+                    data_agendamento: data.split('-').reverse().join('/'), 
+                    horario: hora + 'h',
+                    valor_total: valorTotal
+                })
+            });
+
+            alert("Agendamento efetuado com sucesso e registrado na planilha!"); 
+            window.location.reload();
+
+        } catch (err) {
+            console.error("Erro na integração:", err);
+            alert("Agendamento efetuado com sucesso!");
             window.location.reload();
         }
     });
