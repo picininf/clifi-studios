@@ -6,114 +6,155 @@
     <title>CLIFI STUDIOS | Home</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.44.0/dist/umd/supabase.js"></script>
 </head>
 <body>
 
     <header>
         <div class="container header-container">
-            <div class="logo">
-                <span class="logo-main">CLIFI</span><span class="logo-dot">_</span><span class="logo-sub">STUDIOS</span>
-            </div>
-            <nav>
-                <ul>
-                    <li><a href="#inicio">Início</a></li>
-                    <li><a href="#servicos">Serviços</a></li>
-                    
-                    <li id="menu-adm" style="display: none;"><a href="dashboard.html" style="color: #E63900; font-weight: 600;">Painel ADM</a></li>
-                    <li id="menu-auth"><a href="login.html" style="color: #aaa;">Entrar / Cadastrar</a></li>
-
-                    <li><a href="#agendamento" class="btn-nav">Agendar Estúdio</a></li>
+            <h1 class="logo">
+                <a href="#inicio"><span class="logo-main">CLIFI</span><span class="logo-dot">_</span><span class="logo-sub">STUDIOS</span></a>
+            </h1>
+            <nav class="nav-principal">
+                <ul class="nav-links">
+                    <li><a href="#inicio" class="nav-link-item">Início</a></li>
+                    <li><a href="#servicos" class="nav-link-item">Serviços</a></li>
+                    <li><a href="#agendamento" class="nav-link-item">Agendar</a></li>
+                </ul>
+                <ul class="nav-auth">
+                    <li id="menu-adm" style="display: none;"><a href="dashboard.html" class="btn-adm"><i class="fa-solid antiquewhite"></i> Painel ADM</a></li>
+                    <li id="menu-auth"><a href="login.html" class="btn-login">Entrar / Cadastrar</a></li>
+                    <li><a href="#agendamento" class="btn-nav">Reserve Agora</a></li>
                 </ul>
             </nav>
         </div>
     </header>
 
-    <section id="inicio" class="hero">
-        <div class="container hero-content">
-            <h1>AUDIO. VÍDEO. CRIAÇÃO.</h1>
-            <p>Grave seu videoclipe em um estúdio profissional.</p>
-            <a href="#agendamento" class="btn-primary">Reserve sua Sessão</a>
-        </div>
-    </section>
-
-    <section id="servicos" class="services">
-        <div class="container">
-            <h2 class="section-title">Nossos Serviços</h2>
-            <div class="services-grid">
-                <div class="service-card">
-                    <h3>Sessão de Gravação</h3>
-                    <p class="price">R$ 250 <span>/ hora</span></p>
-                    <button class="btn-select" onclick="selecionarServico('1')">Selecionar</button>
-                </div>
-                <div class="service-card featured">
-                    <div class="badge">Mais Procurado</div>
-                    <h3>Gravação + Edição Completa</h3>
-                    <p class="price">R$ 890 <span>/ pacote</span></p>
-                    <button class="btn-select" onclick="selecionarServico('2')">Selecionar</button>
-                </div>
-                <div class="service-card">
-                    <h3>Edição de Vídeo</h3>
-                    <p class="price">R$ 450 <span>/ faixa</span></p>
-                    <button class="btn-select" onclick="selecionarServico('3')">Selecionar</button>
+    <main>
+        <section id="inicio" class="hero">
+            <div class="container hero-content">
+                <span class="hero-subtitle">Estúdio de Alta Performance</span>
+                <h1>AUDIO. VÍDEO. CRIAÇÃO.</h1>
+                <p>Grave seu projeto, podcast ou videoclipe em um ambiente profissional com infraestrutura de ponta.</p>
+                <div class="hero-actions">
+                    <a href="#agendamento" class="btn-primary">Reserve sua Sessão</a>
+                    <a href="#servicos" class="btn-secondary">Ver Serviços</a>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <section id="agendamento" class="booking">
-        <div class="container">
-            <h2 class="section-title">Agende sua Hora</h2>
-            <div class="booking-wrapper">
-                <form id="form-agendamento">
-                    <div class="form-group">
-                        <label for="nome">Nome Completo</label>
-                        <input type="text" id="nome" name="nome" required placeholder="Seu nome">
+        <section id="servicos" class="services">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">Nossos Serviços</h2>
+                    <p class="section-subtitle">Escolha o plano ideal para a sua produção</p>
+                </div>
+                
+                <div class="services-grid">
+                    <div class="service-card">
+                        <div class="service-icon"><i class="fa-solid fa-microphone-lines"></i></div>
+                        <h3>Sessão de Gravação</h3>
+                        <p class="service-desc">Uso do estúdio com assistência técnica inclusa.</p>
+                        <p class="price">R$ 250 <span>/ hora</span></p>
+                        <button class="btn-select" onclick="selecionarServico('1')">Selecionar Serviço</button>
                     </div>
-
-                    <div class="form-group">
-                        <label for="email">E-mail de Contato</label>
-                        <input type="email" id="email" name="email" required placeholder="seuemail@exemplo.com">
+                    
+                    <div class="service-card featured">
+                        <div class="badge">Mais Procurado</div>
+                        <div class="service-icon"><i class="fa-solid fa-video"></i></div>
+                        <h3>Gravação + Edição Completa</h3>
+                        <p class="service-desc">Produção ponta a ponta do seu videoclipe ou podcast.</p>
+                        <p class="price">R$ 890 <span>/ pacote</span></p>
+                        <button class="btn-select" onclick="selecionarServico('2')">Selecionar Serviço</button>
                     </div>
-
-                    <div class="form-group">
-                        <label for="servico-selecionado">Serviço Escolhido</label>
-                        <select id="servico-selecionado" name="servico" required onchange="atualizarTotal()">
-                            <option value="" disabled selected>Selecione o serviço</option>
-                            <option value="1" data-valor="250">Sessão de Gravação (R$ 250/h)</option>
-                            <option value="2" data-valor="890">Gravação + Edição Completa (R$ 890)</option>
-                            <option value="3" data-valor="450">Edição de Vídeo (R$ 450)</option>
-                        </select>
+                    
+                    <div class="service-card">
+                        <div class="service-icon"><i class="fa-solid fa-sliders"></i></div>
+                        <h3>Edição de Vídeo</h3>
+                        <p class="service-desc">Pós-produção, color grading e mixagem de áudio.</p>
+                        <p class="price">R$ 450 <span>/ faixa</span></p>
+                        <button class="btn-select" onclick="selecionarServico('3')">Selecionar Serviço</button>
                     </div>
+                </div>
+            </div>
+        </section>
 
-                    <div class="form-row">
+        <section id="agendamento" class="booking">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">Agende sua Hora</h2>
+                    <p class="section-subtitle">Preencha os dados abaixo para garantir o seu horário</p>
+                </div>
+                
+                <div class="booking-wrapper">
+                    <form id="form-agendamento" class="booking-form">
                         <div class="form-group">
-                            <label for="data">Dias Disponíveis</label>
-                            <select id="data" name="data" required onchange="carregarHorariosDisponiveis()">
-                                <option value="" disabled selected>Escolha um dia</option>
-                                <option value="2026-08-10">10/08 (Segunda-feira)</option>
-                                <option value="2026-08-25">25/08 (Terça-feira)</option>
-                            </select>
+                            <label for="nome"><i class="fa-regular fa-user"></i> Nome Completo</label>
+                            <input type="text" id="nome" name="nome" required placeholder="Ex: João Silva">
                         </div>
-                        <div class="form-group">
-                            <label for="hora">Horário</label>
-                            <select id="hora" name="hora" required disabled>
-                                <option value="" disabled selected>Selecione uma data primeiro</option>
-                            </select>
-                        </div>
-                    </div>
 
-                    <div class="checkout-box">
-                        <h3>Resumo do Pedido</h3>
-                        <div class="checkout-row"><span id="resumo-servico">Nenhum</span><span id="resumo-preco">R$ 0,00</span></div>
-                        <hr>
-                        <div class="checkout-row total"><span>Total:</span><span id="total-pagar">R$ 0,00</span></div>
-                        <button type="submit" class="btn-checkout">Confirmar Agendamento</button>
-                    </div>
-                </form>
+                        <div class="form-group">
+                            <label for="email"><i class="fa-regular fa-envelope"></i> E-mail de Contato</label>
+                            <input type="email" id="email" name="email" required placeholder="exemplo@clifi.com">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="servico-selecionado"><i class="fa-solid fa-compact-disc"></i> Serviço Escolhido</label>
+                            <div class="select-wrapper">
+                                <select id="servico-selecionado" name="servico" required onchange="atualizarTotal()">
+                                    <option value="" disabled selected>Selecione o serviço ideal</option>
+                                    <option value="1" data-valor="250">Sessão de Gravação (R$ 250/h)</option>
+                                    <option value="2" data-valor="890">Gravação + Edição Completa (R$ 890)</option>
+                                    <option value="3" data-valor="450">Edição de Vídeo (R$ 450)</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="data"><i class="fa-regular fa-calendar"></i> Escolha a Data</label>
+                                <input type="date" id="data" name="data" required onchange="carregarHorariosDisponiveis()">
+                            </div>
+                            <div class="form-group">
+                                <label for="hora"><i class="fa-regular fa-clock"></i> Horário Disponível</label>
+                                <div class="select-wrapper">
+                                    <select id="hora" name="hora" required disabled>
+                                        <option value="" disabled selected>Aguardando data...</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="checkout-box">
+                            <h3>Resumo do Agendamento</h3>
+                            <div class="checkout-row">
+                                <span id="resumo-servico" class="checkout-item-name">Nenhum serviço selecionado</span>
+                                <span id="resumo-preco" class="checkout-item-price">R$ 0,00</span>
+                            </div>
+                            <hr class="checkout-divider">
+                            <div class="checkout-row total">
+                                <span>Total a pagar:</span>
+                                <span id="total-pagar">R$ 0,00</span>
+                            </div>
+                            <button type="submit" class="btn-checkout">Confirmar e Agendar <i class="fa-solid fa-arrow-right"></i></button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="main-footer">
+        <div class="container footer-container">
+            <p>&copy; 2026 CLIFI_STUDIOS. Todos os direitos reservados.</p>
+            <div class="footer-socials">
+                <a href="#" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+                <a href="#" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a>
+                <a href="#" aria-label="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
             </div>
         </div>
-    </section>
+    </footer>
 
     <script src="script.js"></script>
 </body>

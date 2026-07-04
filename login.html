@@ -2,28 +2,178 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CLIFI STUDIOS | Login</title>
+    
     <link rel="stylesheet" href="style.css">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.44.0/dist/umd/supabase.js"></script>
+
     <style>
-        body { display: flex; align-items: center; justify-content: center; height: 100vh; background: #0b0b0b; color: white; font-family: sans-serif; }
-        .card { background: #161616; padding: 40px; border-radius: 8px; width: 320px; text-align: center; border: 1px solid #222; }
-        input { width: 100%; padding: 10px; margin: 10px 0; background: #222; border: 1px solid #333; color: white; border-radius: 4px; box-sizing: border-box;}
-        button { width: 100%; padding: 12px; background: #E63900; color: white; border: none; font-weight: bold; border-radius: 4px; cursor: pointer; }
-        a { display: block; margin-top: 15px; color: #777; text-decoration: none; font-size: 14px; }
+        /* Estilos específicos e centralização da página de login */
+        body { 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            min-height: 100vh; 
+            background: var(--bg-primary, #0b0b0b); 
+            color: var(--text-main, #ffffff); 
+            font-family: 'Montserrat', sans-serif;
+            padding: 20px;
+        }
+
+        .login-container {
+            width: 100%;
+            max-width: 400px;
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        .login-card { 
+            background: var(--bg-card, #161616); 
+            padding: 40px 30px; 
+            border-radius: 12px; 
+            text-align: center; 
+            border: 1px solid var(--border-color, #222222);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+        }
+
+        .login-card h2 {
+            font-weight: 800;
+            font-size: 24px;
+            letter-spacing: 2px;
+            margin-bottom: 30px;
+        }
+
+        .login-card h2 span {
+            color: var(--accent, #E63900);
+        }
+
+        /* Grupos de Input com Ícone interno */
+        .input-group {
+            position: relative;
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .input-group i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #555;
+            transition: var(--transition-smooth, all 0.3s);
+        }
+
+        .input-group input { 
+            width: 100%; 
+            padding: 14px 16px 14px 45px; 
+            background: var(--bg-primary, #0b0b0b); 
+            border: 1px solid #333333; 
+            color: white; 
+            border-radius: 6px; 
+            font-family: 'Montserrat', sans-serif;
+            font-size: 15px;
+            transition: var(--transition-smooth, all 0.3s);
+            box-sizing: border-box;
+        }
+
+        /* Efeito de foco mudando a cor do ícone e da borda */
+        .input-group input:focus { 
+            outline: none; 
+            border-color: var(--accent, #E63900); 
+            box-shadow: 0 0 0 3px rgba(230, 57, 0, 0.15);
+        }
+
+        .input-group input:focus + i {
+            color: var(--accent, #E63900);
+        }
+
+        .btn-submit { 
+            width: 100%; 
+            padding: 14px; 
+            background: var(--accent, #E63900); 
+            color: white; 
+            border: none; 
+            font-weight: 700; 
+            font-size: 16px;
+            border-radius: 6px; 
+            cursor: pointer; 
+            transition: var(--transition-smooth, all 0.3s);
+            margin-top: 10px;
+        }
+
+        .btn-submit:hover { 
+            background: var(--accent-hover, #ff4a14);
+            box-shadow: 0 8px 20px rgba(230, 57, 0, 0.2);
+            transform: translateY(-1px);
+        }
+
+        /* Links de navegação secundaria */
+        .login-links {
+            margin-top: 25px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .login-links a { 
+            color: var(--text-muted, #aaaaaa); 
+            text-decoration: none; 
+            font-size: 14px; 
+            font-weight: 500;
+            transition: var(--transition-smooth, all 0.3s);
+        }
+
+        .login-links a:hover { 
+            color: var(--text-main, #ffffff); 
+        }
+
+        .back-link {
+            font-size: 13px !important;
+            color: #666666 !important;
+        }
+
+        .back-link:hover {
+            color: var(--accent, #E63900) !important;
+        }
+
+        /* Animação suave de entrada */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
     </style>
 </head>
 <body>
-    <div class="card">
-        <h2>CLIFI_LOGIN</h2>
-        <form id="form-login">
-            <input type="email" id="login-email" required placeholder="E-mail">
-            <input type="password" id="login-senha" required placeholder="Senha">
-            <button type="submit">Entrar</button>
-        </form>
-        <a href="registro.html">Não tem conta? Cadastre-se</a>
-        <a href="index.html">← Voltar para o Início</a>
+
+    <div class="login-container">
+        <div class="login-card">
+            <h2>CLIFI<span>_</span>LOGIN</h2>
+            
+            <form id="form-login">
+                <div class="input-group">
+                    <input type="email" id="login-email" required placeholder="E-mail">
+                    <i class="fa-regular fa-envelope"></i>
+                </div>
+                
+                <div class="input-group">
+                    <input type="password" id="login-senha" required placeholder="Senha">
+                    <i class="fa-solid fa-lock"></i>
+                </div>
+                
+                <button type="submit" class="btn-submit">Entrar</button>
+            </form>
+            
+            <div class="login-links">
+                <a href="registro.html">Não tem uma conta? <strong>Cadastre-se</strong></a>
+                <a href="index.html" class="back-link"><i class="fa-solid fa-arrow-left"></i> Voltar para o Início</a>
+            </div>
+        </div>
     </div>
+
     <script src="script.js"></script>
 </body>
 </html>
