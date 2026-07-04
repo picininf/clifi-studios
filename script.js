@@ -195,6 +195,16 @@ if (formAgendamento) {
         e.preventDefault();
         if (!supabase) return;
 
+        // Captura o botão de envio para dar o feedback visual
+        const botaoSubmit = formAgendamento.querySelector('button[type="submit"]');
+        const textoOriginalBotao = botaoSubmit ? botaoSubmit.innerText : "Confirmar Agendamento";
+
+        // Feedback imediato: muda o texto e desativa o botão
+        if (botaoSubmit) {
+            botaoSubmit.disabled = true;
+            botaoSubmit.innerText = "Processando agendamento... Por favor, aguarde.";
+        }
+
         const nome = document.getElementById('nome').value;
         const email = document.getElementById('email').value;
         const servicoId = document.getElementById('servico-selecionado').value;
@@ -218,10 +228,15 @@ if (formAgendamento) {
 
             if (error) {
                 alert("Erro ao salvar no banco: " + error.message);
+                // Restaura o botão em caso de erro no banco
+                if (botaoSubmit) {
+                    botaoSubmit.disabled = false;
+                    botaoSubmit.innerText = textoOriginalBotao;
+                }
                 return;
             }
 
-            // 2. Envia para o Google Sheets de forma assíncrona/silenciosa
+            // 2. Envia para o Google Sheets de forma silenciosa
             await fetch(GOOGLE_SHEETS_URL, {
                 method: 'POST',
                 mode: 'no-cors',
@@ -238,13 +253,30 @@ if (formAgendamento) {
                 })
             });
 
-            alert("Agendamento efetuado com sucesso e registrado na planilha!"); 
-            window.location.reload();
+            // 3. Alerta de sucesso total
+            alert("✨ Agendamento efetuado com sucesso e registrado na planilha! ✨"); 
+            
+            // 4. Limpa todos os campos do formulário na tela
+            formAgendamento.reset();
+
+            // 5. Limpa os campos de texto do resumo visual de valores
+            const resumoServico = document.getElementById('resumo-servico');
+            const resumoPreco = document.getElementById('resumo-preco');
+            const totalPagar = document.getElementById('total-pagar');
+            if (resumoServico) resumoServico.innerText = "Nenhum";
+            if (resumoPreco) resumoPreco.innerText = "R$ 0,00";
+            if (totalPagar) totalPagar.innerText = "R$ 0,00";
 
         } catch (err) {
             console.error("Erro na integração:", err);
             alert("Agendamento efetuado com sucesso!");
-            window.location.reload();
+            formAgendamento.reset();
+        } finally {
+            // Restaura o botão para o estado original caso o usuário queira agendar outro horário
+            if (botaoSubmit) {
+                botaoSubmit.disabled = false;
+                botaoSubmit.innerText = textoOriginalBotao;
+            }
         }
     });
 }
