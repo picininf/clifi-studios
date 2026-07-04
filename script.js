@@ -2,8 +2,13 @@
 const SUPABASE_URL = 'https://vbteldgxbjzcyeupvqfh.supabase.co';
 const SUPABASE_KEY = 'sb_publishable_gFZvU5AhfALyay6DoFcirA_vD-R4sd-';
 
-const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+// Usando um nome temporário para não dar conflito de escopo no navegador
+const _supabaseClient = window.supabase ? window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY) : null;
+const supabase = _supabaseClient;
 
+if (!supabase) {
+    console.error("Erro fatal: A biblioteca do Supabase não foi carregada no HTML!");
+}
 // 1. GERENCIAMENTO DE ESTADO E INICIALIZAÇÃO DA PÁGINA
 document.addEventListener("DOMContentLoaded", async function() {
     const { data: { session } } = await supabase.auth.getSession();
